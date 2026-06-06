@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Emilio Justine — Virtual Assistant</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF8F4;
+    --warm-white: #FFFDF9;
+    --sand: #EDE8DF;
+    --taupe: #C5BAA8;
+    --brown: #7C6D5E;
+    --dark: #2E2720;
+    --accent: #B07B5C;
+    --accent-light: #F0E5DC;
+    --text: #3A3028;
+    --text-muted: #8A7E72;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(250,248,244,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--sand);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    color: var(--dark);
+    letter-spacing: 0.01em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: none;
+    padding: 8rem 6vw 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, #EDE0D4 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 1.75rem;
+    font-weight: 400;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    line-height: 1.08;
+    color: var(--dark);
+    max-width: 780px;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--dark);
+    color: #FAF8F4;
+    text-decoration: none;
+    padding: 0.85rem 2rem;
+    border-radius: 100px;
+    font-size: 0.88rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-ghost {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.88rem;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--accent); }
+  .btn-ghost::after { content: '↓'; }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .about-img {
+    aspect-ratio: 4/5;
+    background: var(--sand);
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+  }
+  .about-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--taupe);
+  }
+  .about-img-placeholder svg { opacity: 0.5; }
+  .about-img-placeholder span { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .about-content h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    line-height: 1.2;
+    color: var(--dark);
+    font-weight: 400;
+    margin-bottom: 1.25rem;
+  }
+  .about-content p { color: var(--text-muted); margin-bottom: 1rem; font-weight: 300; }
+  .about-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--sand);
+  }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--dark);
+    display: block;
+  }
+  .stat-label { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+
+  /* SERVICES */
+  #services { background: var(--warm-white); max-width: none; padding: 6rem 6vw; }
+  .services-inner { max-width: 900px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    font-weight: 400;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.4rem;
+    color: var(--dark);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 3.5rem;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5px;
+    background: var(--sand);
+    border: 1.5px solid var(--sand);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .service-card {
+    background: var(--warm-white);
+    padding: 2rem 1.75rem;
+    transition: background 0.2s;
+  }
+  .service-card:hover { background: var(--accent-light); }
+  .service-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--accent-light);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    font-size: 1.3rem;
+  }
+  .service-card h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+  }
+  .service-card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.65; font-weight: 300; }
+
+  /* WORK */
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  .work-card {
+    border: 1px solid var(--sand);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--warm-white);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .work-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.07); }
+  .work-card.featured { grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; }
+  .work-thumb {
+    aspect-ratio: 16/9;
+    background: var(--sand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--taupe);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+  }
+  .work-card.featured .work-thumb { aspect-ratio: auto; min-height: 220px; }
+  .work-thumb.teal { background: #D4EDE5; }
+  .work-thumb.peach { background: #F0E0D4; }
+  .work-thumb.lavender { background: #E5E0F0; }
+  .work-thumb.sage { background: #D8E8D4; }
+  .work-thumb.yellow { background: #F5EDD4; }
+  .work-info { padding: 1.5rem; }
+  .work-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 0.75rem;
+    font-weight: 400;
+  }
+  .work-info h3 { font-size: 1rem; font-weight: 500; color: var(--dark); margin-bottom: 0.4rem; }
+  .work-info p { font-size: 0.85rem; color: var(--text-muted); font-weight: 300; }
+
+  /* TESTIMONIALS */
+  #testimonials { background: var(--dark); max-width: none; padding: 6rem 6vw; }
+  .testimonials-inner { max-width: 900px; margin: 0 auto; }
+  #testimonials .section-label { color: var(--taupe); }
+  #testimonials .section-title { color: var(--cream); }
+  .testi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
+  .testi-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 1.75rem;
+  }
+  .testi-quote { font-size: 0.9rem; color: #C5BAA8; line-height: 1.75; margin-bottom: 1.25rem; font-weight: 300; font-style: italic; }
+  .testi-author { display: flex; align-items: center; gap: 10px; }
+  .testi-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #fff;
+  }
+  .testi-name { font-size: 0.85rem; font-weight: 500; color: #FAF8F4; }
+  .testi-role { font-size: 0.75rem; color: #8A7E72; }
+
+  /* CONTACT */
+  .contact-wrap {
+    background: var(--warm-white);
+    border: 1px solid var(--sand);
+    border-radius: 24px;
+    padding: 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-wrap::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 260px;
+    height: 260px;
+    background: radial-gradient(circle, #EDE0D4 0%, transparent 70%);
+  }
+  .contact-wrap h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.6rem;
+    color: var(--dark);
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+    position: relative;
+  }
+  .contact-wrap p { color: var(--text-muted); margin-bottom: 2.5rem; max-width: 420px; margin-left: auto; margin-right: auto; position: relative; }
+  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid var(--sand);
+    border-radius: 100px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    color: var(--text);
+    background: white;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+    font-weight: 400;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    border-top: 1px solid var(--sand);
+    font-weight: 300;
+  }
+
+  /* WORK PREVIEW ILLUSTRATIONS */
+  .preview-content {
+    width: 90%;
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+  }
+  .preview-bar {
+    height: 8px;
+    border-radius: 100px;
+    background: currentColor;
+    opacity: 0.25;
+  }
+  .preview-bar.short { width: 55%; }
+  .preview-bar.med { width: 78%; }
+  .preview-bar.full { width: 100%; }
+  .preview-row { display: flex; gap: 6px; }
+  .preview-box {
+    height: 40px;
+    flex: 1;
+    border-radius: 6px;
+    background: currentColor;
+    opacity: 0.15;
+  }
+
+  @media (max-width: 720px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { gap: 1.25rem; }
+    .nav-links a { font-size: 0.8rem; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .about-img { max-height: 280px; }
+    .work-grid { grid-template-columns: 1fr; }
+    .work-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .contact-wrap { padding: 2.5rem 1.5rem; }
+    section { padding: 4rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Emilio Justine Avio</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">✦ Available for new clients</div>
+  <h1>Your <em>trusted</em> Virtual<br>Assistant</h1>
+  <p class="hero-sub">I help busy entrepreneurs and small businesses stay organized, grow their presence, and get more done — without the overwhelm.</p>
+  <div class="hero-cta">
+    <a href="#contact" class="btn-primary">Work with me</a>
+    <a href="#work" class="btn-ghost">See my work</a>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img">
+      <img src="formal.jpg" alt="Emilio Justine Avio" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;position:absolute;top:0;left:0;" />
+    </div>
+    <div class="about-content">
+      <p class="section-label">About me</p>
+      <h2>Hi there, I'm Emilio Justine Avio 👋</h2>
+      <p>I'm a detail-oriented Virtual Assistant based in the Philippines with 1 year of experience supporting founders, coaches, and e-commerce brands worldwide.</p>
+      <p>From managing inboxes and calendars to growing social media accounts and generating qualified leads — I take the tasks off your plate so you can focus on what matters most.</p>
+      <div class="about-stats">
+        <div>
+          <span class="stat-num">5+</span>
+          <span class="stat-label">Clients served</span>
+        </div>
+        <div>
+          <span class="stat-num">1 yr</span>
+          <span class="stat-label">Experience</span>
+        </div>
+        <div>
+          <span class="stat-num">100%</span>
+          <span class="stat-label">Remote</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-inner">
+    <p class="section-label">What I do</p>
+    <h2 class="section-title">Services designed<br>to support your growth</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🗓</div>
+        <h3>Admin & Scheduling</h3>
+        <p>Calendar management, email inbox handling, data entry, file organization, and day-to-day administrative support.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <h3>Social Media Management</h3>
+        <p>Content scheduling, caption writing, engagement, and reporting across Instagram, Facebook, LinkedIn, and TikTok.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎧</div>
+        <h3>Customer Support</h3>
+        <p>Responding to inquiries, resolving issues, live chat handling, and maintaining a positive customer experience.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔍</div>
+        <h3>Lead Generation</h3>
+        <p>Prospect research, outreach list building, CRM data entry, and initial outreach support to fuel your pipeline.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <p class="section-label">Portfolio</p>
+  <h2 class="section-title" style="font-family:'DM Serif Display',serif;font-size:2.4rem;color:var(--dark);font-weight:400;line-height:1.2;margin-bottom:2rem;">Sample work & projects</h2>
+  <div class="work-grid">
+
+    <!-- FEATURED: Content Calendar -->
+    <div class="work-card featured">
+      <div class="work-thumb teal" style="color:#1a6a58;padding:20px;align-items:flex-start;">
+        <div style="width:100%;font-family:'DM Sans',sans-serif;">
+          <div style="font-size:0.65rem;font-weight:500;letter-spacing:0.1em;color:#2a7a68;margin-bottom:10px;text-transform:uppercase;">November Content Calendar</div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:0.6rem;">
+            <div style="text-align:center;color:#2a7a68;font-weight:500;padding:3px 0;">M</div>
+            <div style="text-align:center;color:#2a7a68;font-weight:500;padding:3px 0;">T</div>
+            <div style="text-align:center;color:#2a7a68;font-weight:500;padding:3px 0;">W</div>
+            <div style="text-align:center;color:#2a7a68;font-weight:500;padding:3px 0;">T</div>
+            <div style="text-align:center;color:#2a7a68;font-weight:500;padding:3px 0;">F</div>
+            <div style="text-align:center;color:#2a7a68;font-weight:500;padding:3px 0;">S</div>
+            <div style="text-align:center;color:#2a7a68;font-weight:500;padding:3px 0;">S</div>
+            <!-- Week 1 -->
+            <div style="background:rgba(0,100,80,0.12);border-radius:3px;padding:4px 3px;text-align:center;">1</div>
+            <div style="background:rgba(0,100,80,0.2);border-radius:3px;padding:4px 3px;text-align:center;color:#1a5a48;">2</div>
+            <div style="background:rgba(0,100,80,0.08);border-radius:3px;padding:4px 3px;text-align:center;">3</div>
+            <div style="background:rgba(0,100,80,0.2);border-radius:3px;padding:4px 3px;text-align:center;color:#1a5a48;">4</div>
+            <div style="background:rgba(0,100,80,0.08);border-radius:3px;padding:4px 3px;text-align:center;">5</div>
+            <div style="background:rgba(0,100,80,0.15);border-radius:3px;padding:4px 3px;text-align:center;color:#1a5a48;">6</div>
+            <div style="background:rgba(0,100,80,0.08);border-radius:3px;padding:4px 3px;text-align:center;">7</div>
+            <!-- Week 2 -->
+            <div style="background:rgba(0,100,80,0.2);border-radius:3px;padding:4px 3px;text-align:center;color:#1a5a48;">8</div>
+            <div style="background:rgba(0,100,80,0.08);border-radius:3px;padding:4px 3px;text-align:center;">9</div>
+            <div style="background:rgba(0,100,80,0.2);border-radius:3px;padding:4px 3px;text-align:center;color:#1a5a48;">10</div>
+            <div style="background:rgba(0,100,80,0.08);border-radius:3px;padding:4px 3px;text-align:center;">11</div>
+            <div style="background:rgba(0,100,80,0.2);border-radius:3px;padding:4px 3px;text-align:center;color:#1a5a48;">12</div>
+            <div style="background:rgba(0,100,80,0.08);border-radius:3px;padding:4px 3px;text-align:center;">13</div>
+            <div style="background:rgba(0,100,80,0.15);border-radius:3px;padding:4px 3px;text-align:center;color:#1a5a48;">14</div>
+            <!-- Week 3 -->
+            <div style="background:rgba(0,100,80,0.08);border-radius:3px;padding:4px 3px;text-align:center;">15</div>
+            <div style="background:rgba(0,100,80,0.2);border-radius:3px;padding:4px 3px;text-align:center;color:#1a5a48;">16</div>
+            <div style="background:rgba(0,100,80,0.08);border-radius:3px;padding:4px 3px;text-align:center;">17</div>
+            <div style="background:rgba(0,100,80,0.2);border-radius:3px;padding:4px 3px;text-align:center;color:#1a5a48;">18</div>
+            <div style="background:rgba(0,100,80,0.08);border-radius:3px;padding:4px 3px;text-align:center;">19</div>
+            <div style="background:rgba(0,100,80,0.15);border-radius:3px;padding:4px 3px;text-align:center;color:#1a5a48;">20</div>
+            <div style="background:rgba(0,100,80,0.08);border-radius:3px;padding:4px 3px;text-align:center;">21</div>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
+            <span style="background:rgba(0,100,80,0.18);color:#1a5a48;font-size:0.58rem;padding:2px 7px;border-radius:100px;font-weight:500;">📸 Reel</span>
+            <span style="background:rgba(0,100,80,0.18);color:#1a5a48;font-size:0.58rem;padding:2px 7px;border-radius:100px;font-weight:500;">✍️ Quote Post</span>
+            <span style="background:rgba(0,100,80,0.18);color:#1a5a48;font-size:0.58rem;padding:2px 7px;border-radius:100px;font-weight:500;">🛍 Promo</span>
+          </div>
+        </div>
+      </div>
+      <div class="work-info" style="padding:2rem;">
+        <span class="work-tag">Social Media</span>
+        <h3 style="font-size:1.2rem;">Content Calendar — Wellness Brand</h3>
+        <p>Built and managed a full monthly content calendar for a holistic wellness coach on Instagram and Facebook. Wrote captions, sourced visuals, and scheduled 20+ posts per month. Grew following by 42% in 90 days.</p>
+        <p style="margin-top:0.75rem;font-size:0.8rem;color:var(--taupe);">Tools: Later · Canva · Meta Business Suite</p>
+      </div>
+    </div>
+
+    <!-- Lead Gen Spreadsheet -->
+    <div class="work-card">
+      <div class="work-thumb sage" style="color:#2a5a2a;padding:16px;align-items:flex-start;">
+        <div style="width:100%;font-family:'DM Sans',sans-serif;font-size:0.6rem;">
+          <div style="font-size:0.62rem;font-weight:500;color:#2a5a2a;margin-bottom:8px;letter-spacing:0.06em;">LEAD TRACKER — Q4 OUTREACH</div>
+          <div style="display:grid;grid-template-columns:2fr 1.5fr 1fr;gap:2px;">
+            <div style="background:rgba(40,100,40,0.2);padding:3px 5px;border-radius:2px;font-weight:500;color:#1a4a1a;">Company</div>
+            <div style="background:rgba(40,100,40,0.2);padding:3px 5px;border-radius:2px;font-weight:500;color:#1a4a1a;">Contact</div>
+            <div style="background:rgba(40,100,40,0.2);padding:3px 5px;border-radius:2px;font-weight:500;color:#1a4a1a;">Status</div>
+            <div style="background:rgba(40,100,40,0.08);padding:3px 5px;border-radius:2px;">Bloom Co.</div>
+            <div style="background:rgba(40,100,40,0.08);padding:3px 5px;border-radius:2px;">J. Santos</div>
+            <div style="background:rgba(40,160,40,0.2);padding:3px 5px;border-radius:2px;color:#1a6a1a;font-weight:500;">✓ Replied</div>
+            <div style="background:rgba(40,100,40,0.08);padding:3px 5px;border-radius:2px;">Nova Labs</div>
+            <div style="background:rgba(40,100,40,0.08);padding:3px 5px;border-radius:2px;">M. Reyes</div>
+            <div style="background:rgba(40,100,40,0.12);padding:3px 5px;border-radius:2px;color:#2a5a2a;">⏳ Sent</div>
+            <div style="background:rgba(40,100,40,0.08);padding:3px 5px;border-radius:2px;">Spark Media</div>
+            <div style="background:rgba(40,100,40,0.08);padding:3px 5px;border-radius:2px;">A. Cruz</div>
+            <div style="background:rgba(40,160,40,0.2);padding:3px 5px;border-radius:2px;color:#1a6a1a;font-weight:500;">✓ Replied</div>
+            <div style="background:rgba(40,100,40,0.08);padding:3px 5px;border-radius:2px;">Elevate PH</div>
+            <div style="background:rgba(40,100,40,0.08);padding:3px 5px;border-radius:2px;">R. Torres</div>
+            <div style="background:rgba(40,100,40,0.12);padding:3px 5px;border-radius:2px;color:#2a5a2a;">⏳ Sent</div>
+            <div style="background:rgba(40,100,40,0.08);padding:3px 5px;border-radius:2px;">MindBridge</div>
+            <div style="background:rgba(40,100,40,0.08);padding:3px 5px;border-radius:2px;">L. Garcia</div>
+            <div style="background:rgba(40,160,40,0.2);padding:3px 5px;border-radius:2px;color:#1a6a1a;font-weight:500;">✓ Booked</div>
+          </div>
+        </div>
+      </div>
+      <div class="work-info">
+        <span class="work-tag">Lead Generation</span>
+        <h3>Lead Tracker — B2B Consultant</h3>
+        <p>Built a 500-prospect lead list with verified contacts, organized outreach status on a live Google Sheet, and helped book 8 discovery calls in the first campaign week.</p>
+      </div>
+    </div>
+
+    <!-- Inbox / Email Management -->
+    <div class="work-card">
+      <div class="work-thumb peach" style="color:#8a4a2a;padding:16px;align-items:flex-start;">
+        <div style="width:100%;font-family:'DM Sans',sans-serif;font-size:0.6rem;">
+          <div style="font-size:0.62rem;font-weight:500;color:#8a4a2a;margin-bottom:8px;letter-spacing:0.06em;">INBOX — SORTED &amp; LABELED</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="display:flex;align-items:center;gap:6px;background:rgba(160,80,40,0.1);padding:5px 7px;border-radius:4px;">
+              <div style="width:6px;height:6px;border-radius:50%;background:#b07b5c;flex-shrink:0;"></div>
+              <div style="flex:1;"><div style="font-weight:500;color:#6a3a1a;">Order Confirmation #4821</div><div style="opacity:0.7;margin-top:1px;">📦 Shop · auto-labeled</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;background:rgba(160,80,40,0.06);padding:5px 7px;border-radius:4px;">
+              <div style="width:6px;height:6px;border-radius:50%;background:#c5a888;flex-shrink:0;"></div>
+              <div style="flex:1;"><div style="font-weight:500;color:#6a3a1a;">Re: Refund Request</div><div style="opacity:0.7;margin-top:1px;">🎧 Support · replied ✓</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;background:rgba(160,80,40,0.06);padding:5px 7px;border-radius:4px;">
+              <div style="width:6px;height:6px;border-radius:50%;background:#c5a888;flex-shrink:0;"></div>
+              <div style="flex:1;"><div style="font-weight:500;color:#6a3a1a;">New Inquiry — Website</div><div style="opacity:0.7;margin-top:1px;">📋 Leads · forwarded ✓</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;background:rgba(160,80,40,0.1);padding:5px 7px;border-radius:4px;">
+              <div style="width:6px;height:6px;border-radius:50%;background:#b07b5c;flex-shrink:0;"></div>
+              <div style="flex:1;"><div style="font-weight:500;color:#6a3a1a;">Invoice Due — Supplier</div><div style="opacity:0.7;margin-top:1px;">💼 Finance · flagged</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="work-info">
+        <span class="work-tag">Admin</span>
+        <h3>Inbox Zero — E-commerce Store</h3>
+        <p>Cleared a 600+ email backlog in one week for an online store owner. Set up labels, filters, and canned replies to keep the inbox under control daily.</p>
+      </div>
+    </div>
+
+    <!-- Customer Support Tickets -->
+    <div class="work-card">
+      <div class="work-thumb lavender" style="color:#4a3a7a;padding:16px;align-items:flex-start;">
+        <div style="width:100%;font-family:'DM Sans',sans-serif;font-size:0.6rem;">
+          <div style="font-size:0.62rem;font-weight:500;color:#4a3a7a;margin-bottom:8px;letter-spacing:0.06em;">SUPPORT QUEUE</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(80,60,160,0.08);padding:5px 7px;border-radius:4px;">
+              <div><div style="font-weight:500;color:#3a2a6a;">#1042 · Billing issue</div><div style="opacity:0.65;margin-top:1px;">via Live Chat</div></div>
+              <span style="background:rgba(40,160,80,0.2);color:#1a6a3a;padding:2px 7px;border-radius:100px;font-weight:500;">Resolved</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(80,60,160,0.08);padding:5px 7px;border-radius:4px;">
+              <div><div style="font-weight:500;color:#3a2a6a;">#1043 · Login error</div><div style="opacity:0.65;margin-top:1px;">via Email</div></div>
+              <span style="background:rgba(40,160,80,0.2);color:#1a6a3a;padding:2px 7px;border-radius:100px;font-weight:500;">Resolved</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(80,60,160,0.08);padding:5px 7px;border-radius:4px;">
+              <div><div style="font-weight:500;color:#3a2a6a;">#1044 · Upgrade request</div><div style="opacity:0.65;margin-top:1px;">via Live Chat</div></div>
+              <span style="background:rgba(200,160,0,0.2);color:#7a5a00;padding:2px 7px;border-radius:100px;font-weight:500;">In Progress</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(80,60,160,0.08);padding:5px 7px;border-radius:4px;">
+              <div><div style="font-weight:500;color:#3a2a6a;">#1045 · Feature question</div><div style="opacity:0.65;margin-top:1px;">via Email</div></div>
+              <span style="background:rgba(40,160,80,0.2);color:#1a6a3a;padding:2px 7px;border-radius:100px;font-weight:500;">Resolved</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="work-info">
+        <span class="work-tag">Customer Support</span>
+        <h3>Support Helpdesk — SaaS Startup</h3>
+        <p>Set up Zendesk from scratch, wrote 20+ response macros, and handled live chat and email tickets daily. Maintained a 97% customer satisfaction score over 3 months.</p>
+      </div>
+    </div>
+
+    <!-- Scheduling / Calendar -->
+    <div class="work-card">
+      <div class="work-thumb yellow" style="color:#7a5a10;padding:16px;align-items:flex-start;">
+        <div style="width:100%;font-family:'DM Sans',sans-serif;font-size:0.6rem;">
+          <div style="font-size:0.62rem;font-weight:500;color:#7a5a10;margin-bottom:8px;letter-spacing:0.06em;">WEEKLY SCHEDULE</div>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <div style="display:flex;gap:6px;align-items:center;">
+              <div style="width:28px;text-align:right;opacity:0.6;flex-shrink:0;">Mon</div>
+              <div style="flex:1;background:rgba(160,120,20,0.18);border-radius:3px;padding:4px 7px;color:#5a3a08;font-weight:500;">9AM · Client Call — Mark T.</div>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <div style="width:28px;text-align:right;opacity:0.6;flex-shrink:0;">Tue</div>
+              <div style="flex:1;background:rgba(160,120,20,0.1);border-radius:3px;padding:4px 7px;color:#5a3a08;">2PM · Property Showing #3</div>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <div style="width:28px;text-align:right;opacity:0.6;flex-shrink:0;">Wed</div>
+              <div style="flex:1;background:rgba(160,120,20,0.18);border-radius:3px;padding:4px 7px;color:#5a3a08;font-weight:500;">10AM · Open House — Makati</div>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <div style="width:28px;text-align:right;opacity:0.6;flex-shrink:0;">Thu</div>
+              <div style="flex:1;background:rgba(160,120,20,0.1);border-radius:3px;padding:4px 7px;color:#5a3a08;">3PM · Buyer Consultation</div>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <div style="width:28px;text-align:right;opacity:0.6;flex-shrink:0;">Fri</div>
+              <div style="flex:1;background:rgba(160,120,20,0.18);border-radius:3px;padding:4px 7px;color:#5a3a08;font-weight:500;">11AM · Contract Signing</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="work-info">
+        <span class="work-tag">Admin & Scheduling</span>
+        <h3>Calendar System — Real Estate Agent</h3>
+        <p>Set up a Calendly + Google Calendar system for a real estate agent, eliminating double bookings and saving 5+ hours a week on back-and-forth scheduling.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testimonials-inner">
+    <p class="section-label">Kind words</p>
+    <h2 class="section-title">What clients say</h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <p class="testi-quote">"Hiring him was the best decision I made for my business. My inbox is finally under control and I can focus on coaching my clients."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SC</div>
+          <div>
+            <div class="testi-name">Sarah Chen</div>
+            <div class="testi-role">Life Coach, California</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-quote">"Our Instagram engagement doubled in two months. He understands our brand voice and always delivers on time. Truly a gem."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">MR</div>
+          <div>
+            <div class="testi-name">Marcus Riley</div>
+            <div class="testi-role">Founder, Wellness Brand</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-quote">"The lead list he built was clean, targeted, and ready to use. We booked 8 calls from the first outreach. Highly recommend!"</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AK</div>
+          <div>
+            <div class="testi-name">Amara Kofi</div>
+            <div class="testi-role">B2B Consultant, UK</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrap">
+    <p class="section-label" style="margin-bottom:0.5rem;">Let's connect</p>
+    <h2>Ready to lighten<br>your workload?</h2>
+    <p>I'm currently accepting new clients. Drop me a message and let's talk about how I can support you.</p>
+    <div class="contact-links">
+      <a href="mailto:emilioavio17@gmail.com" class="contact-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M1 5l7 5 7-5" stroke="currentColor" stroke-width="1.3"/></svg>
+        emilioavio17@gmail.com
+      </a>
+      <a href="https://instagram.com/jazten56_" target="_blank" class="contact-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="3" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.3"/><circle cx="11.5" cy="4.5" r="0.75" fill="currentColor"/></svg>
+        @jazten56_
+      </a>
+      <a href="tel:09622691157" class="contact-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2h3l1.5 3.5-1.75 1.25C6.85 8.85 7.15 9.15 8.25 10.25L9.5 8.5 13 10v3c0 .55-.45 1-1 1C5.33 14 2 10.67 2 7c0-.55.45-1 1-1z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+        09622691157
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Emilio Justine Avio · Virtual Assistant · Philippines
+</footer>
+
+</body>
+</html>
